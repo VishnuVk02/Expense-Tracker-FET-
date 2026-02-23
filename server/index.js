@@ -5,16 +5,8 @@ const connectDB = require('./config/db');
 
 // Connect to Database
 connectDB();
-// const cors = require('cors');
-
-
 
 const app = express();
-app.use(cors({
-    origin: '*', // for now (safe for dev)
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
-}));
 
 // Middleware
 app.use(cors());

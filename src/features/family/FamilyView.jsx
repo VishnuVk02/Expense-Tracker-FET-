@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Users, TrendingUp, UserCheck, Shield, ArrowLeft, LogOut, UserMinus } from 'lucide-react';
+import { Users, TrendingUp, UserCheck, Shield, ArrowLeft, LogOut } from 'lucide-react';
 import { format } from 'date-fns';
-import { leaveGroup, removeMember } from '../expenses/expensesSlice';
+import { leaveGroup } from '../expenses/expensesSlice';
 import JoinGroupView from './JoinGroupView';
 
 const FamilyView = ({ setActiveView }) => {
@@ -10,18 +10,11 @@ const FamilyView = ({ setActiveView }) => {
     const expenses = useSelector((state) => state.expenses.items);
     const members = useSelector((state) => state.expenses.members);
     const group = useSelector((state) => state.expenses.group);
-    const user = useSelector((state) => state.auth.user);
 
     const handleLeaveGroup = () => {
         if (window.confirm('Are you sure you want to leave this group?')) {
             dispatch(leaveGroup());
             setActiveView('home');
-        }
-    };
-
-    const handleRemoveMember = (memberId, name) => {
-        if (window.confirm(`Are you sure you want to remove ${name} from the group?`)) {
-            dispatch(removeMember(memberId));
         }
     };
 
@@ -104,16 +97,6 @@ const FamilyView = ({ setActiveView }) => {
                                 </div>
                             </div>
                         </div>
-
-                        {user?.role === 'admin' && member._id !== user._id && (
-                            <button
-                                onClick={() => handleRemoveMember(member._id, member.name)}
-                                className="absolute top-6 right-6 p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950 rounded-xl transition-all"
-                                title="Remove Member"
-                            >
-                                <UserMinus size={20} />
-                            </button>
-                        )}
 
                         <div className="grid grid-cols-2 gap-4 mb-8">
                             <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-700/50">

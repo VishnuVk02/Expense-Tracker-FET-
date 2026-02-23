@@ -41,7 +41,7 @@ const GSAPIntro = ({ onComplete }) => {
                 ref={textRef}
                 className="text-4xl md:text-6xl font-bold text-primary opacity-0 translate-y-10"
             >
-                Expense <span className='text-green-600'>Flow</span>
+                Expense Tracker
             </h1>
         </div>
     );

@@ -9,7 +9,6 @@ import AnalyticsCharts from './features/expenses/AnalyticsCharts';
 import HomeSummary from './features/expenses/HomeSummary';
 import FamilyView from './features/family/FamilyView';
 import JoinGroupView from './features/family/JoinGroupView';
-import SettingsView from './features/auth/SettingsView';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchExpenses, fetchGroupSettings, fetchMembers, resetExpenses } from './features/expenses/expensesSlice';
 
@@ -120,12 +119,6 @@ function App() {
             {activeView === 'family' && (
               <div className="animate-fade-in">
                 <FamilyView setActiveView={setActiveView} />
-              </div>
-            )}
-
-            {activeView === 'settings' && (
-              <div className="animate-fade-in">
-                <SettingsView />
               </div>
             )}
           </div>

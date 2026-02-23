@@ -79,7 +79,7 @@ const AnalyticsCharts = () => {
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
                             </Pie>
-                            <Tooltip contentStyle={tooltipStyle} itemStyle={{ color: '#fff' }} formatter={(value) => [`${currency}${value.toLocaleString()}`, 'Total']} />
+                            <Tooltip contentStyle={tooltipStyle} itemStyle={{ color: '#fff' }} />
                             <Legend verticalAlign="bottom" height={36} />
                         </PieChart>
                     </ResponsiveContainer>
@@ -93,7 +93,7 @@ const AnalyticsCharts = () => {
                             <CartesianGrid strokeDasharray="3 3" stroke="#88888820" vertical={false} />
                             <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
                             <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
-                            <Tooltip cursor={{ fill: '#88888810' }} contentStyle={tooltipStyle} formatter={(value) => [`${currency}${value.toLocaleString()}`, 'Amount']} />
+                            <Tooltip cursor={{ fill: '#88888810' }} contentStyle={tooltipStyle} />
                             <Bar dataKey="amount" fill="#38bdf8" radius={[6, 6, 0, 0]} barSize={30} />
                         </BarChart>
                     </ResponsiveContainer>
