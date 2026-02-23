@@ -42,6 +42,23 @@ export const login = createAsyncThunk('auth/login', async (userData, thunkAPI) =
     }
 });
 
+// Update profile (avatar, currency)
+export const updateProfile = createAsyncThunk('auth/updateProfile', async (profileData, thunkAPI) => {
+    try {
+        const { auth } = thunkAPI.getState();
+        const response = await axios.put(`${API_URL}/profile`, profileData, {
+            headers: { Authorization: `Bearer ${auth.user?.token}` }
+        });
+        if (response.data) {
+            localStorage.setItem('user', JSON.stringify(response.data));
+        }
+        return response.data;
+    } catch (error) {
+        const message = error.response?.data?.message || error.message || error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
+});
+
 // Logout user
 export const logout = createAsyncThunk('auth/logout', async () => {
     localStorage.removeItem('user');
@@ -85,6 +102,9 @@ const authSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
                 state.user = null;
+            })
+            .addCase(updateProfile.fulfilled, (state, action) => {
+                state.user = action.payload;
             })
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;

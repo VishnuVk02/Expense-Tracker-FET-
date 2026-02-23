@@ -4,13 +4,19 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 
 // Connect to Database
+if (!process.env.MONGODB_URI) {
+    console.error('CRITICAL ERROR: MONGODB_URI is not defined in environment variables.');
+    console.log('Please check your .env file in the server directory.');
+} else {
+    console.log('MONGODB_URI found in environment. Attempting connection...');
+}
 connectDB();
 
 const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '5mb' }));
 
 // Log requests
 app.use((req, res, next) => {

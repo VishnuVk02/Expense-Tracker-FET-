@@ -16,6 +16,8 @@ const categoryIcons = {
 const ExpenseList = () => {
     const dispatch = useDispatch();
     const { items: expenses, loading } = useSelector((state) => state.expenses);
+    const { user } = useSelector((state) => state.auth);
+    const currency = user?.currency || '$';
 
     const handleDelete = (id) => {
         dispatch(removeExpenseAsync(id));
@@ -51,7 +53,7 @@ const ExpenseList = () => {
                         </div>
                         <div className="flex items-center gap-4">
                             <span className="text-lg font-bold text-slate-900 dark:text-white">
-                                -${expense.amount.toLocaleString()}
+                                -{currency}{expense.amount.toLocaleString()}
                             </span>
                             <button
                                 onClick={() => handleDelete(expense._id)}

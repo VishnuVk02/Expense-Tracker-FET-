@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, register, reset } from './authSlice';
-import { Wallet, LogIn, UserPlus, Mail, User, ShieldCheck, Lock, Users, Key } from 'lucide-react';
+import { Wallet, LogIn, UserPlus, Mail, User, ShieldCheck, Lock, Users, Key, Globe } from 'lucide-react';
+
+const CURRENCY_OPTIONS = [
+    { symbol: '$', label: 'USD ($)' },
+    { symbol: '€', label: 'EUR (€)' },
+    { symbol: '£', label: 'GBP (£)' },
+    { symbol: '₹', label: 'INR (₹)' },
+    { symbol: '¥', label: 'JPY (¥)' },
+    { symbol: 'A$', label: 'AUD (A$)' },
+];
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -13,7 +22,8 @@ const Login = () => {
         email: '',
         password: '',
         groupName: '',
-        inviteCode: ''
+        inviteCode: '',
+        currency: '$'
     });
 
     useEffect(() => {
@@ -112,6 +122,24 @@ const Login = () => {
                                 />
                             </div>
                         </div>
+
+                        {!isLogin && (
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-slate-700 dark:text-slate-300 ml-1">Currency</label>
+                                <div className="relative">
+                                    <Globe className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                                    <select
+                                        className="w-full pl-10 pr-4 py-3 bg-slate-100 dark:bg-slate-800 border-none rounded-2xl focus:ring-2 focus:ring-primary outline-none transition-all dark:text-white appearance-none cursor-pointer"
+                                        value={formData.currency}
+                                        onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
+                                    >
+                                        {CURRENCY_OPTIONS.map((c) => (
+                                            <option key={c.symbol} value={c.symbol}>{c.label}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                        )}
 
                         <button
                             type="submit"

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Wallet, LayoutDashboard, BarChart3, Users, LogOut, Sun, Moon, Copy, Check, Shield } from 'lucide-react';
+import { Wallet, LayoutDashboard, BarChart3, Users, LogOut, Sun, Moon, Copy, Check, Shield, Settings as SettingsIcon } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../features/auth/authSlice';
 
@@ -15,6 +15,7 @@ const Sidebar = ({ activeView, setActiveView, isDark, toggleTheme }) => {
         { id: 'home', icon: LayoutDashboard, label: 'Dashboard' },
         { id: 'analytics', icon: BarChart3, label: 'Analytics' },
         { id: 'family', icon: Users, label: 'Family Group' },
+        { id: 'settings', icon: SettingsIcon, label: 'Settings' },
     ];
 
     const copyInviteCode = () => {
@@ -45,8 +46,8 @@ const Sidebar = ({ activeView, setActiveView, isDark, toggleTheme }) => {
                                 key={item.id}
                                 onClick={() => setActiveView(item.id)}
                                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all font-medium ${activeView === item.id
-                                        ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-105'
-                                        : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'
+                                    ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-105'
+                                    : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'
                                     }`}
                             >
                                 <Icon size={20} />
@@ -84,9 +85,16 @@ const Sidebar = ({ activeView, setActiveView, isDark, toggleTheme }) => {
 
                 <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700/50">
                     <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary">
-                            <img src={user?.avatar} alt={user?.name} className="w-full h-full object-cover" />
-                        </div>
+                        {user?.avatar ? (
+                            <div
+                                className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary"
+                                dangerouslySetInnerHTML={{ __html: user.avatar }}
+                            />
+                        ) : (
+                            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-sm font-bold text-slate-500">
+                                {user?.name?.[0]?.toUpperCase() || '?'}
+                            </div>
+                        )}
                         <div className="flex-1 truncate">
                             <p className="text-sm font-bold truncate dark:text-white">{user?.name}</p>
                             <p className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1">

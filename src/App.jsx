@@ -9,13 +9,14 @@ import AnalyticsCharts from './features/expenses/AnalyticsCharts';
 import HomeSummary from './features/expenses/HomeSummary';
 import FamilyView from './features/family/FamilyView';
 import JoinGroupView from './features/family/JoinGroupView';
+import Settings from './features/settings/Settings';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchExpenses, fetchGroupSettings, fetchMembers, resetExpenses } from './features/expenses/expensesSlice';
 
 function App() {
   const dispatch = useDispatch();
   const [showContent, setShowContent] = useState(false);
-  const [activeView, setActiveView] = useState('home'); // 'home', 'analytics', 'family'
+  const [activeView, setActiveView] = useState('home'); // 'home', 'analytics', 'family', 'settings'
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   const { group } = useSelector((state) => state.expenses);
 
@@ -119,6 +120,12 @@ function App() {
             {activeView === 'family' && (
               <div className="animate-fade-in">
                 <FamilyView setActiveView={setActiveView} />
+              </div>
+            )}
+
+            {activeView === 'settings' && (
+              <div className="animate-fade-in">
+                <Settings setActiveView={setActiveView} />
               </div>
             )}
           </div>

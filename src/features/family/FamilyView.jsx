@@ -10,6 +10,8 @@ const FamilyView = ({ setActiveView }) => {
     const expenses = useSelector((state) => state.expenses.items);
     const members = useSelector((state) => state.expenses.members);
     const group = useSelector((state) => state.expenses.group);
+    const { user } = useSelector((state) => state.auth);
+    const currency = user?.currency || '$';
 
     const handleLeaveGroup = () => {
         if (window.confirm('Are you sure you want to leave this group?')) {
@@ -65,7 +67,7 @@ const FamilyView = ({ setActiveView }) => {
                 <div className="flex items-center gap-6">
                     <div className="text-right hidden md:block">
                         <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">Total Group Spending</p>
-                        <p className="text-3xl font-black text-primary">${totalFamilySpending.toLocaleString()}</p>
+                        <p className="text-3xl font-black text-primary">{currency}{totalFamilySpending.toLocaleString()}</p>
                     </div>
                     {group && (
                         <button
@@ -84,7 +86,13 @@ const FamilyView = ({ setActiveView }) => {
                     <div key={member._id} className="glass p-6 rounded-3xl relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
                         <div className="flex items-center gap-4 mb-6">
                             <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-primary shadow-lg shadow-primary/10">
-                                <img src={member.avatar || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop'} alt={member.name} className="w-full h-full object-cover" />
+                                {member.avatar ? (
+                                    <div className="w-full h-full" dangerouslySetInnerHTML={{ __html: member.avatar }} />
+                                ) : (
+                                    <div className="w-full h-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-2xl font-bold text-slate-500">
+                                        {member.name?.[0]?.toUpperCase() || '?'}
+                                    </div>
+                                )}
                             </div>
                             <div>
                                 <h3 className="text-xl font-bold dark:text-white flex items-center gap-2">
@@ -101,7 +109,7 @@ const FamilyView = ({ setActiveView }) => {
                         <div className="grid grid-cols-2 gap-4 mb-8">
                             <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-700/50">
                                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Contributed</p>
-                                <p className="text-xl font-black text-primary">${member.total.toLocaleString()}</p>
+                                <p className="text-xl font-black text-primary">{currency}{member.total.toLocaleString()}</p>
                             </div>
                             <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-700/50">
                                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Items</p>
@@ -121,7 +129,7 @@ const FamilyView = ({ setActiveView }) => {
                                             <p className="text-sm font-bold truncate dark:text-white">{ex.title}</p>
                                             <p className="text-[10px] text-slate-400">{format(new Date(ex.date), 'MMM dd')}</p>
                                         </div>
-                                        <span className="text-sm font-black text-red-500">-${ex.amount.toLocaleString()}</span>
+                                        <span className="text-sm font-black text-red-500">-{currency}{ex.amount.toLocaleString()}</span>
                                     </div>
                                 ))
                             ) : (

@@ -1,11 +1,12 @@
 import React from 'react';
-import { LayoutDashboard, BarChart3, Users, Sun, Moon } from 'lucide-react';
+import { LayoutDashboard, BarChart3, Users, Sun, Moon, Settings } from 'lucide-react';
 
 const MobileNav = ({ activeView, setActiveView, isDark, toggleTheme }) => {
     const navItems = [
         { id: 'home', icon: LayoutDashboard, label: 'Home' },
         { id: 'analytics', icon: BarChart3, label: 'Charts' },
         { id: 'family', icon: Users, label: 'Family' },
+        { id: 'settings', icon: Settings, label: 'Settings' },
     ];
 
     return (
@@ -18,13 +19,13 @@ const MobileNav = ({ activeView, setActiveView, isDark, toggleTheme }) => {
                         <button
                             key={item.id}
                             onClick={() => setActiveView(item.id)}
-                            className={`flex flex-col items-center gap-1 px-4 py-2 rounded-2xl transition-all ${isActive
-                                    ? 'bg-primary text-white shadow-lg shadow-primary/30'
-                                    : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'
+                            className={`flex flex-col items-center gap-1 px-3 py-2 rounded-2xl transition-all ${isActive
+                                ? 'bg-primary text-white shadow-lg shadow-primary/30'
+                                : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'
                                 }`}
                         >
-                            <Icon size={20} />
-                            <span className="text-[10px] font-bold uppercase tracking-wider">{item.label}</span>
+                            <Icon size={18} />
+                            <span className="text-[9px] font-bold uppercase tracking-wider">{item.label}</span>
                         </button>
                     );
                 })}
@@ -33,7 +34,7 @@ const MobileNav = ({ activeView, setActiveView, isDark, toggleTheme }) => {
                     onClick={toggleTheme}
                     className="p-3 rounded-2xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-all"
                 >
-                    {isDark ? <Sun size={20} /> : <Moon size={20} />}
+                    {isDark ? <Sun size={18} /> : <Moon size={18} />}
                 </button>
             </nav>
         </div>
