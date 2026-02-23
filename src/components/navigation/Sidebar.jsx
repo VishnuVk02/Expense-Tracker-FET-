@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Wallet, LayoutDashboard, BarChart3, Users, LogOut, Sun, Moon, Copy, Check, Shield } from 'lucide-react';
+import { Wallet, LayoutDashboard, BarChart3, Users, LogOut, Sun, Moon, Copy, Check, Shield, Settings as SettingsIcon } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../features/auth/authSlice';
 
@@ -15,6 +15,7 @@ const Sidebar = ({ activeView, setActiveView, isDark, toggleTheme }) => {
         { id: 'home', icon: LayoutDashboard, label: 'Dashboard' },
         { id: 'analytics', icon: BarChart3, label: 'Analytics' },
         { id: 'family', icon: Users, label: 'Family Group' },
+        { id: 'settings', icon: SettingsIcon, label: 'Settings' },
     ];
 
     const copyInviteCode = () => {
@@ -45,8 +46,8 @@ const Sidebar = ({ activeView, setActiveView, isDark, toggleTheme }) => {
                                 key={item.id}
                                 onClick={() => setActiveView(item.id)}
                                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all font-medium ${activeView === item.id
-                                        ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-105'
-                                        : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'
+                                    ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-105'
+                                    : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'
                                     }`}
                             >
                                 <Icon size={20} />

@@ -2,7 +2,9 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { logout } from '../auth/authSlice';
 
-const API_URL = 'http://localhost:5000/api';
+// const API_URL = 'http://localhost:5000/api';
+const API_URL = `${import.meta.env.VITE_API_URL}/api`;
+
 
 const getAuthHeader = (thunkAPI) => {
     const { auth } = thunkAPI.getState();
@@ -84,6 +86,17 @@ export const fetchMembers = createAsyncThunk('expenses/fetchMembers', async (_, 
 export const leaveGroup = createAsyncThunk('expenses/leaveGroup', async (_, thunkAPI) => {
     try {
         const response = await axios.post(`${API_URL}/groups/leave`, {}, getAuthHeader(thunkAPI));
+        return response.data;
+    } catch (error) {
+        return handleUnauthorized(error, thunkAPI);
+    }
+});
+
+// Remove member (admin only)
+export const removeMember = createAsyncThunk('expenses/removeMember', async (userId, thunkAPI) => {
+    try {
+        const response = await axios.delete(`${API_URL}/groups/members/${userId}`, getAuthHeader(thunkAPI));
+        thunkAPI.dispatch(fetchMembers());
         return response.data;
     } catch (error) {
         return handleUnauthorized(error, thunkAPI);

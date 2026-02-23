@@ -141,4 +141,39 @@ router.post('/leave', protect, async (req, res) => {
     }
 });
 
+// @desc    Remove a member from group
+// @route   DELETE /api/groups/members/:userId
+// @access  Private (Admin only)
+router.delete('/members/:userId', protect, async (req, res) => {
+    try {
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ message: 'Only admins can remove members' });
+        }
+
+        const userToRemove = await User.findById(req.params.userId);
+
+        if (!userToRemove) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (userToRemove.groupId.toString() !== req.user.groupId.toString()) {
+            return res.status(403).json({ message: 'User is not in your group' });
+        }
+
+        if (userToRemove._id.toString() === req.user._id.toString()) {
+            return res.status(400).json({ message: 'Admin cannot remove themselves. Use leave group instead.' });
+        }
+
+        // Remove user from group
+        await User.findByIdAndUpdate(req.params.userId, {
+            groupId: null,
+            role: 'admin'
+        });
+
+        res.json({ message: 'Member removed successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 module.exports = router;

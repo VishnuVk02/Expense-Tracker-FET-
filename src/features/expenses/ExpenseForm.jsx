@@ -55,13 +55,14 @@ const ExpenseForm = () => {
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     />
                 </div>
-                <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Amount</label>
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Amount</label>
+                <div className="relative">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">{user?.currency || '₹'}</span>
                     <input
                         type="number"
                         required
                         disabled={!hasGroup}
-                        className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl focus:ring-2 focus:ring-primary outline-none transition-all dark:text-white disabled:opacity-50"
+                        className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl focus:ring-2 focus:ring-primary outline-none transition-all dark:text-white disabled:opacity-50"
                         placeholder="0.00"
                         value={formData.amount}
                         onChange={(e) => setFormData({ ...formData, amount: e.target.value })}

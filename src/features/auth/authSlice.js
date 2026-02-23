@@ -1,7 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/auth';
+// const API_URL = 'http://localhost:5000/api/auth';
+const API_URL = `${import.meta.env.VITE_API_URL}/api/auth`;
+
 
 // Get user from localStorage
 const user = JSON.parse(localStorage.getItem('user'));
@@ -42,6 +44,37 @@ export const login = createAsyncThunk('auth/login', async (userData, thunkAPI) =
     }
 });
 
+// Reset password
+export const resetPassword = createAsyncThunk('auth/resetPassword', async (userData, thunkAPI) => {
+    try {
+        const response = await axios.post(`${API_URL}/reset-password`, userData);
+        return response.data;
+    } catch (error) {
+        const message = error.response?.data?.message || error.message || error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
+});
+
+// Update settings
+export const updateSettings = createAsyncThunk('auth/updateSettings', async (settingsData, thunkAPI) => {
+    try {
+        const { auth } = thunkAPI.getState();
+        const config = {
+            headers: {
+                Authorization: `Bearer ${auth.user?.token}`
+            }
+        };
+        const response = await axios.put(`${API_URL}/settings`, settingsData, config);
+        if (response.data) {
+            localStorage.setItem('user', JSON.stringify(response.data));
+        }
+        return response.data;
+    } catch (error) {
+        const message = error.response?.data?.message || error.message || error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
+});
+
 // Logout user
 export const logout = createAsyncThunk('auth/logout', async () => {
     localStorage.removeItem('user');
@@ -55,6 +88,8 @@ const authSlice = createSlice({
             state.loading = false;
             state.error = null;
         }
+
+
     },
     extraReducers: (builder) => {
         builder
@@ -91,6 +126,9 @@ const authSlice = createSlice({
                 state.isAuthenticated = false;
                 state.error = null;
                 state.loading = false;
+            })
+            .addCase(updateSettings.fulfilled, (state, action) => {
+                state.user = action.payload;
             })
             .addCase('expenses/leaveGroup/fulfilled', (state) => {
                 if (state.user) {
