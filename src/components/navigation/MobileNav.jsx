@@ -1,10 +1,11 @@
 import React from 'react';
-import { LayoutDashboard, BarChart3, Users, Sun, Moon, Settings } from 'lucide-react';
+import { LayoutDashboard, BarChart3, Users, Sun, Moon, Settings, Bell } from 'lucide-react';
 
 const MobileNav = ({ activeView, setActiveView, isDark, toggleTheme }) => {
     const navItems = [
         { id: 'home', icon: LayoutDashboard, label: 'Home' },
         { id: 'analytics', icon: BarChart3, label: 'Charts' },
+        { id: 'bills', icon: Bell, label: 'Bills' },
         { id: 'family', icon: Users, label: 'Family' },
         { id: 'settings', icon: Settings, label: 'Settings' },
     ];

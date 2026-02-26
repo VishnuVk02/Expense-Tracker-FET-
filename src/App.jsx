@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import GSAPIntro from './components/ui/GSAPIntro';
 import Sidebar from './components/navigation/Sidebar';
 import MobileNav from './components/navigation/MobileNav';
+import MobileHeader from './components/navigation/MobileHeader';
 import Login from './features/auth/Login';
 import ExpenseForm from './features/expenses/ExpenseForm';
 import ExpenseList from './features/expenses/ExpenseList';
@@ -10,6 +11,7 @@ import HomeSummary from './features/expenses/HomeSummary';
 import FamilyView from './features/family/FamilyView';
 import JoinGroupView from './features/family/JoinGroupView';
 import Settings from './features/settings/Settings';
+import BillsView from './features/bills/BillsView';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchExpenses, fetchGroupSettings, fetchMembers, resetExpenses } from './features/expenses/expensesSlice';
 
@@ -85,6 +87,7 @@ function App() {
 
         {/* Main Content */}
         <main className="flex-1 lg:ml-72 min-h-screen pb-32 lg:pb-8">
+          <MobileHeader setActiveView={setActiveView} />
           <div className="container mx-auto px-4 py-8 max-w-7xl">
             {activeView === 'home' && (
               <div className="space-y-8 animate-fade-in">
@@ -126,6 +129,12 @@ function App() {
             {activeView === 'settings' && (
               <div className="animate-fade-in">
                 <Settings setActiveView={setActiveView} />
+              </div>
+            )}
+
+            {activeView === 'bills' && (
+              <div className="animate-fade-in">
+                <BillsView />
               </div>
             )}
           </div>

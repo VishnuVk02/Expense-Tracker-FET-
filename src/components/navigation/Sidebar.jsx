@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Wallet, LayoutDashboard, BarChart3, Users, LogOut, Sun, Moon, Copy, Check, Shield, Settings as SettingsIcon } from 'lucide-react';
+import { Wallet, LayoutDashboard, BarChart3, Users, LogOut, Sun, Moon, Copy, Check, Shield, Bell, Settings as SettingsIcon } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../features/auth/authSlice';
 
@@ -14,6 +14,7 @@ const Sidebar = ({ activeView, setActiveView, isDark, toggleTheme }) => {
     const navItems = [
         { id: 'home', icon: LayoutDashboard, label: 'Dashboard' },
         { id: 'analytics', icon: BarChart3, label: 'Analytics' },
+        { id: 'bills', icon: Bell, label: 'Pending Bills' },
         { id: 'family', icon: Users, label: 'Family Group' },
         { id: 'settings', icon: SettingsIcon, label: 'Settings' },
     ];
@@ -60,7 +61,7 @@ const Sidebar = ({ activeView, setActiveView, isDark, toggleTheme }) => {
                 {isAdmin && group?.inviteCode && (
                     <div className="mt-8 p-4 bg-primary/5 dark:bg-primary/10 rounded-2xl border border-primary/10">
                         <p className="text-[10px] font-bold text-primary uppercase tracking-widest mb-2 flex items-center gap-1">
-                            <Shield size={10} /> Admin Invite
+                            <Shield size={14} /> Admin Invite
                         </p>
                         <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">Share this code to invite family members:</p>
                         <button

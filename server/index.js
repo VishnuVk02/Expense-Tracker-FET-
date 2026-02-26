@@ -35,6 +35,8 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/expenses', require('./routes/expenses'));
 // Group Routes
 app.use('/api/groups', require('./routes/groups'));
+// Bill Routes
+app.use('/api/bills', require('./routes/bills'));
 
 const PORT = process.env.PORT || 5000;
 
